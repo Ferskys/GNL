@@ -5,67 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsuomins <fsuomins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 20:08:17 by fsuomins          #+#    #+#             */
-/*   Updated: 2022/10/10 23:51:28 by fsuomins         ###   ########.fr       */
+/*   Created: 2022/10/11 16:33:16 by fsuomins          #+#    #+#             */
+/*   Updated: 2022/10/11 18:36:23 by fsuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char    *catch_line(char    *str)
+#include "get_next_line.h"
+
+char	*getline(char *save)
 {
-    int        i;
-    char    *ssave;
-    
-    i = 0;
-    if (!str[i])
-        return (NULL);
-    while (str[i] && str[i] != '\n')
-        i++;
-    ssave = (char *)malloc(sizeof(char) * (i + 1));
-    if (!ssave)
-        return (NULL);
-    i = 0;
-    while (str[i] && str[i] != '\n')
-    {
-        ssave[i] = str[i];
-        i++;
-    }
-    if (str[i] == '\n')
-    {
-        ssave[i] = str[i];
-        i++;
-    }
-    ssave[i] = '\0';
-    free (str);
-    return (ssave);
+	int		i;
+	char	*s;
+
+	i = 0;
+	if (!save[i])
+		return (NULL);
+	while (save[i] && save[i] != '\n')
+		i++;
+	s = (char *)malloc(sizeof(char) * (i + 2));
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (save[i] && save[i] != '\n')
+	{
+		s[i] = save[i];
+		i++;
+	}
+	if (save[i] == '\n')
+	{
+		s[i] = save[i];
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
 }
 
-char    *save_more_letters(char *str)
+char	*saveline(char *save)
 {
-    int        i;
-    int        j;
-    char    *ssave;
-    
-    i = 0;
-    j = 0;
-    if (!str[i])
-    {
-        free(str);
-        return (NULL);
-    }
-    while (str[i] && str[i] != '\n')
-        i++;
-    ssave = (char *)malloc(sizeof(char) * (ft_strlen(ssave) - i + 1));
-    if (!ssave)
-        return (NULL);
-    i++
-    while (str[i])
-        ssave[j++] = str[i++];
-    ssave[j] = '\0';
-    free(str);
-    return (ssave);    
+	int		i;
+	int		c;
+	char	*s;
+
+	i = 0;
+	while (save[i] && save[i] != '\n')
+		i++;
+	if (!save[i])
+	{
+		free(save);
+		return (NULL);
+	}
+	s = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
+	if (!s)
+		return (NULL);
+	i++;
+	c = 0;
+	while (save[i])
+		s[c++] = save[i++];
+	s[c] = '\0';
+	free(save);
+	return (s);
 }
 
-char	*ft_read_and_save(int fd, char *save)
+char	*read_save(int fd, char *save)
 {
 	char	*buff;
 	int		read_bytes;
@@ -89,17 +90,17 @@ char	*ft_read_and_save(int fd, char *save)
 	return (save);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    char        *line;
-    static char    *save;
+	char		*line;
+	static char	*save;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return (0);
-    save = ft_read_and_save(fd, save);
-    if (!save)
-        return (NULL);
-    line = ft_get_line(save);
-    save = ft_save(save);
-    return (line);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	save = read_save(fd, save);
+	if (!save)
+		return (NULL);
+	line = getline(save);
+	save = saveline(save);
+	return (line);
 }
