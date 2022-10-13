@@ -6,7 +6,7 @@
 /*   By: fsuomins <fsuomins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 23:55:34 by fsuomins          #+#    #+#             */
-/*   Updated: 2022/10/11 18:39:13 by fsuomins         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:05:51 by fsuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-size_t			ft_strlen(char *str);
-char			*ft_strchr(char *s, int c);
-char			*ft_strjoin(char *s1, char *s2);
-char			*get_next_line(int fd);
-char			*getline(char *save);
-char			*saveline(char *save);
-char			*read_save(int fd, char *save);
+size_t	ft_strlen(char *str);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char *s1, char *s2);
+char	*get_next_line(int fd);
+char	*get_line(char *save);
+char	*save_line(char *save);
+char	*read_save(int fd, char *save);
 
 #endif

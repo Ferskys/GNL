@@ -6,45 +6,45 @@
 /*   By: fsuomins <fsuomins@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:33:16 by fsuomins          #+#    #+#             */
-/*   Updated: 2022/10/11 18:36:23 by fsuomins         ###   ########.fr       */
+/*   Updated: 2022/10/14 00:06:31 by fsuomins         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*getline(char *save)
+char	*get_line(char *save)
 {
 	int		i;
-	char	*s;
+	char	*j;
 
 	i = 0;
 	if (!save[i])
 		return (NULL);
 	while (save[i] && save[i] != '\n')
 		i++;
-	s = (char *)malloc(sizeof(char) * (i + 2));
-	if (!s)
+	j = (char *)malloc(sizeof(char) * (i + 2));
+	if (!j)
 		return (NULL);
 	i = 0;
 	while (save[i] && save[i] != '\n')
 	{
-		s[i] = save[i];
+		j[i] = save[i];
 		i++;
 	}
 	if (save[i] == '\n')
 	{
-		s[i] = save[i];
+		j[i] = save[i];
 		i++;
 	}
-	s[i] = '\0';
-	return (s);
+	j[i] = '\0';
+	return (j);
 }
 
-char	*saveline(char *save)
+char	*save_line(char *save)
 {
 	int		i;
 	int		c;
-	char	*s;
+	char	*j;
 
 	i = 0;
 	while (save[i] && save[i] != '\n')
@@ -54,16 +54,16 @@ char	*saveline(char *save)
 		free(save);
 		return (NULL);
 	}
-	s = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
-	if (!s)
+	j = (char *)malloc(sizeof(char) * (ft_strlen(save) - i + 1));
+	if (!j)
 		return (NULL);
 	i++;
 	c = 0;
 	while (save[i])
-		s[c++] = save[i++];
-	s[c] = '\0';
+		j[c++] = save[i++];
+	j[c] = '\0';
 	free(save);
-	return (s);
+	return (j);
 }
 
 char	*read_save(int fd, char *save)
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 	save = read_save(fd, save);
 	if (!save)
 		return (NULL);
-	line = getline(save);
-	save = saveline(save);
+	line = get_line(save);
+	save = save_line(save);
 	return (line);
 }
